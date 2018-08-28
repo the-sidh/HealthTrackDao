@@ -24,7 +24,7 @@ import com.itextpdf.text.pdf.PdfWriter;
  * @author Sid
  *
  */
-public class pdfGenerator {
+public class PDFGenerator {
 
 	public static void main(String[] args) throws IOException, DocumentException {
 		File file = new File("C:\\Users\\itau-consultor09\\eclipse-workspace\\HealthTrack\\src\\main\\java\\br\\com\\fiap\\healthtrack\\medidas");
