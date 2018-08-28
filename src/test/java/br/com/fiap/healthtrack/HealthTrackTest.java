@@ -39,7 +39,7 @@ public class HealthTrackTest {
 	}
 
 	@Test
-	public void TestIMC() {
+	public void testIMC() {
 		Peso peso1 = new Peso(40);
 		Peso peso2 = new Peso(46);
 		Peso peso3 = new Peso(46.5f);
@@ -85,7 +85,7 @@ public class HealthTrackTest {
 	}
 
 	@Test
-	public void TestPressao() {
+	public void testPressao() {
 		Pressao p1 = new Pressao(141, 91);// alta
 		Pressao p2 = new Pressao(130, 91);// alta
 		Pressao p3 = new Pressao(141, 85);// alta
@@ -115,13 +115,13 @@ public class HealthTrackTest {
 	}
 
 	@Test
-	public void TestAlimentacao() {
+	public void testAlimentacao() {
 		Alimentacao a = new Alimentacao(TipoAlimentacao.ALMOCO, 100, "");
 		assertTrue("Almoço".equals(a.getTipo().getDescricao()));
 	}
 
 	@Test
-	public void TestPesoDao() {
+	public void testPesoDao() {
 
 		Peso peso1 = new Peso(40);
 		peso1.setDate(new Date());
@@ -194,7 +194,7 @@ public class HealthTrackTest {
 	}
 
 	@Test
-	public void TestaAtividadeFisicaDao() {
+	public void testaAtividadeFisicaDao() {
 		AtividadeFisica af1 = new AtividadeFisica(TipoAtividadeFisica.CAMINHADA, 100, "Teste");
 		AtividadeFisica af2 = new AtividadeFisica(TipoAtividadeFisica.CORRIDA, 100, "Teste");
 		AtividadeFisica af3 = new AtividadeFisica(TipoAtividadeFisica.PEDALADA, 100, "Teste");
@@ -220,7 +220,7 @@ public class HealthTrackTest {
 	}
 	
 	@Test
-	public void TestUserDao(){
+	public void testUserDao(){
 		User user = new User("Luis", new Date(), Genero.MASCULINO, 180f);
 		user.setEmail("teste@teste.com");
 		user.setPassword("secret");
