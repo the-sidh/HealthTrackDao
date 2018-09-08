@@ -33,6 +33,19 @@ public class MedidaDaoFactory {
 		else if(type.getMedidaType().equals(MedidaType.ATIVIDADE_FISICA) && type.getDBDomain().equals(MedidaDBDomain.TESTE)) {
 			return new MedidaTestDaoImpl<AtividadeFisica>();	
 		}
+		
+		if(type.getMedidaType().equals(MedidaType.PESO) && type.getDBDomain().equals(MedidaDBDomain.JDBC)) {
+			return new MedidaOracleDaoImpl<Peso>();	
+		}
+		else if(type.getMedidaType().equals(MedidaType.PRESSAO) && type.getDBDomain().equals(MedidaDBDomain.JDBC)) {
+			return new MedidaOracleDaoImpl<Pressao>();	
+		}
+		else if(type.getMedidaType().equals(MedidaType.ALIMENTACAO) && type.getDBDomain().equals(MedidaDBDomain.JDBC)) {
+			return new MedidaOracleDaoImpl<Alimentacao>();	
+		}
+		else if(type.getMedidaType().equals(MedidaType.ATIVIDADE_FISICA) && type.getDBDomain().equals(MedidaDBDomain.JDBC)) {
+			return new MedidaOracleDaoImpl<AtividadeFisica>();	
+		}
 		MedidaDao<Peso> dao = new MedidaTestDaoImpl<Peso>();
 	
 		return dao;
