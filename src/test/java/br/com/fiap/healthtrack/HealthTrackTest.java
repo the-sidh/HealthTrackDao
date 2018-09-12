@@ -163,7 +163,7 @@ public class HealthTrackTest {
 		peso10.setDate(new Date());
 		peso10.setId(10);
 
-		MedidaDaoType tipoPesoTeste = new MedidaDaoType(MedidaType.PESO, MedidaDBDomain.TESTE);
+		MedidaDaoType tipoPesoTeste = new MedidaDaoType(MedidaType.PESO, MedidaDBDomain.JDBC);
 		MedidaDao<Peso> dao = (MedidaDao<Peso>) MedidaDaoFactory.getInstance().getMedidaDao(tipoPesoTeste);
 
 		dao.insertMedidas(peso1);
