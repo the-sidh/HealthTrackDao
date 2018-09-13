@@ -125,47 +125,39 @@ public class HealthTrackTest {
 
 		Peso peso1 = new Peso(40);
 		peso1.setDate(new Date());
-		peso1.setId(1);
 		
 		Peso peso2 = new Peso(46);
 		peso2.setDate(new Date());
-		peso2.setId(2);
 		
 		Peso peso3 = new Peso(46.5f);
 		peso3.setDate(new Date());
-		peso3.setId(3);
 		
 		Peso peso4 = new Peso(49.4f);
 		peso4.setDate(new Date());
-		peso4.setId(4);
 		
 		Peso peso5 = new Peso(52);
 		peso5.setDate(new Date());
-		peso5.setId(5);
 		
 		Peso peso6 = new Peso(55);
 		peso6.setDate(new Date());
-		peso6.setId(6);
 		
 		Peso peso7 = new Peso(69);
 		peso7.setDate(new Date());
-		peso7.setId(7);
 		
 		Peso peso8 = new Peso(75.5f);
 		peso8.setDate(new Date());
-		peso8.setId(8);
 		
 		Peso peso9 = new Peso(83);
 		peso9.setDate(new Date());
-		peso9.setId(9);
 		
 		Peso peso10 = new Peso(89.5f);
 		peso10.setDate(new Date());
-		peso10.setId(10);
 
 		MedidaDaoType tipoPesoTeste = new MedidaDaoType(MedidaType.PESO, MedidaDBDomain.JDBC);
 		MedidaDao<Peso> dao = (MedidaDao<Peso>) MedidaDaoFactory.getInstance().getMedidaDao(tipoPesoTeste);
 
+		dao.purgeAll();
+		
 		dao.insertMedidas(peso1);
 		dao.insertMedidas(peso2);
 		dao.insertMedidas(peso3);
@@ -185,10 +177,12 @@ public class HealthTrackTest {
 		
 		assertTrue(listaMedidas.size() == 10);
 		assertTrue(dao.getListaMedidas(1, 2).size() == 2);
-		peso1.setPesoEmKg(50f);
-		dao.updateMedida(peso1);
-		assertTrue(dao.getMedida(1).getPesoEmKg() == 50f);
-		dao.deleteMedida(peso1);
+		listaMedidas.get(0).setPesoEmKg(50f);
+		dao.updateMedida(listaMedidas.get(0));
+		listaMedidas = dao.getListaMedidas();
+		assertTrue(dao.getMedida(listaMedidas.get(0).getId()).getPesoEmKg() == 50f);
+		dao.deleteMedida(listaMedidas.get(0));
+		listaMedidas = dao.getListaMedidas();
 		assertTrue(listaMedidas.size() == 9);
 
 	}
@@ -199,23 +193,29 @@ public class HealthTrackTest {
 		AtividadeFisica af2 = new AtividadeFisica(TipoAtividadeFisica.CORRIDA, 100, "Teste");
 		AtividadeFisica af3 = new AtividadeFisica(TipoAtividadeFisica.PEDALADA, 100, "Teste");
 
-		af1.setId(1);
-		af2.setId(2);
-		af3.setId(3);
-		MedidaDaoType tipoPesoTeste = new MedidaDaoType(MedidaType.ATIVIDADE_FISICA, MedidaDBDomain.TESTE);
+		af1.setDate(new Date());
+		af2.setDate(new Date());
+		af3.setDate(new Date());
+		
+		MedidaDaoType tipoPesoTeste = new MedidaDaoType(MedidaType.ATIVIDADE_FISICA, MedidaDBDomain.JDBC);
 		MedidaDao<AtividadeFisica> dao = (MedidaDao<AtividadeFisica>) MedidaDaoFactory.getInstance().getMedidaDao(tipoPesoTeste);
+		
+		dao.purgeAll();
 		
 		dao.insertMedidas(af1);
 		dao.insertMedidas(af2);
 		dao.insertMedidas(af3);
 
-		assertTrue(dao.getListaMedidas().size() == 3);
+		List<AtividadeFisica> listaMedidas = dao.getListaMedidas();
+		assertTrue(listaMedidas.size() == 3);
 		assertTrue(dao.getListaMedidas(1, 2).size() == 2);
-		af1.setTipo(TipoAtividadeFisica.MUSCULACAO);
-		dao.updateMedida(af1);
-		assertTrue(dao.getMedida(1).getTipo().equals(TipoAtividadeFisica.MUSCULACAO));
-		dao.deleteMedida(af1);
-		assertTrue(dao.getListaMedidas().size() == 2);
+		listaMedidas.get(0).setTipo(TipoAtividadeFisica.MUSCULACAO);
+		dao.updateMedida(listaMedidas.get(0));
+		listaMedidas = dao.getListaMedidas();
+		assertTrue(listaMedidas.get(0).getTipo().equals(TipoAtividadeFisica.MUSCULACAO));
+		dao.deleteMedida(listaMedidas.get(0));
+		listaMedidas = dao.getListaMedidas();
+		assertTrue(listaMedidas.size() == 2);
 
 	}
 	

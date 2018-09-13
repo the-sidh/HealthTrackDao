@@ -23,10 +23,10 @@ import br.com.fiap.healthtrack.medidas.pressao.Pressao;
 
 public class MedidaOracleDaoImpl<K extends Medida> implements MedidaDao<K> {
 	private static final String ALIMENTACAO = "br.com.fiap.healthtrack.medidas.alimentacao.Alimentacao";
-	private static final String ATIVIDADE_FISICA = "br.com.fiap.healthtrack.medidas.atividade.AtividadeFisica";
+	private static final String ATIVIDADE_FISICA = "br.com.fiap.healthtrack.medidas.atividadefisica.AtividadeFisica";
 	private static final String PESO = "br.com.fiap.healthtrack.medidas.peso.Peso";
 	private static final String PRESSAO = "br.com.fiap.healthtrack.medidas.pressao.Pressao";
-	
+
 	private Class<K> entityBeanType;
 
 	ConnectionManager connectionManager = ConnectionManagerOracleImpl.getInstance();
@@ -77,10 +77,9 @@ public class MedidaOracleDaoImpl<K extends Medida> implements MedidaDao<K> {
 		K medida = null;
 		PreparedStatement stmt = null;
 		try {
-
-			String query;
 			ResultSet rs = null;
-			query = "SELECT * FROM " + getTableName() + "where id = " + id;
+			String[] param = { getTableName(), getIdFieldName(), new Integer(id).toString() };
+			String query = MessageFormat.format("SELECT * FROM {0} where {1} = {2}", param);
 
 			stmt = connectionManager.getConnection().prepareStatement(query);
 			rs = stmt.executeQuery();
@@ -106,9 +105,9 @@ public class MedidaOracleDaoImpl<K extends Medida> implements MedidaDao<K> {
 	public void insertMedidas(K medida) {
 		PreparedStatement stmt = null;
 		Connection connection = null;
-		String query=null;
+		String query = null;
 		try {
-		
+
 			String[] param = { getTableName(), getFieldsFromType(), getValuesFromType() };
 			query = MessageFormat.format("INSERT INTO {0} ({1}) VALUES({2})", param);
 
@@ -140,8 +139,8 @@ public class MedidaOracleDaoImpl<K extends Medida> implements MedidaDao<K> {
 		Connection connection = null;
 		try {
 			String query;
-			String[] param = { getTableName(), getUpdateParamFromType(), Integer.toString(medida.getId()) };
-			query = MessageFormat.format("UPDATE {0} SET {1} where id={2}", param);
+			String[] param = { getTableName(), getUpdateParamFromType(), getIdFieldName(), Integer.toString(medida.getId()) };
+			query = MessageFormat.format("UPDATE {0} SET {1} where {2}={3}", param);
 
 			connection = connectionManager.getConnection();
 			stmt = connection.prepareStatement(query);
@@ -165,12 +164,17 @@ public class MedidaOracleDaoImpl<K extends Medida> implements MedidaDao<K> {
 
 	@Override
 	public void deleteMedida(K medida) {
+		deleteMedida(medida.getId());
+	}
+
+	@Override
+	public void deleteMedida(int id) {
 		PreparedStatement stmt = null;
 		Connection connection = null;
 		try {
 			String query;
-			String[] param = { getTableName(), Integer.toString(medida.getId()) };
-			query = MessageFormat.format("DELETE FROM {0} WHERE id={1}", param);
+			String[] param = { getTableName(), getIdFieldName(), Integer.toString(id) };
+			query = MessageFormat.format("DELETE FROM {0} WHERE {1}={2}", param);
 
 			connection = connectionManager.getConnection();
 			stmt = connection.prepareStatement(query);
@@ -186,6 +190,33 @@ public class MedidaOracleDaoImpl<K extends Medida> implements MedidaDao<K> {
 			}
 		} catch (TableNotIdentifiedException e1) {
 			e1.printStackTrace();
+		} finally {
+			closeResources(stmt);
+		}
+	}
+
+	@Override
+	public void purgeAll() {
+		PreparedStatement stmt = null;
+		Connection connection = null;
+		try {
+			String[] param = { getTableName() };
+			String query = MessageFormat.format("DELETE FROM {0}", param);
+
+			connection = connectionManager.getConnection();
+			stmt = connection.prepareStatement(query);
+
+			stmt.executeQuery();
+			connection.commit();
+
+		} catch (SQLException e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} catch (TableNotIdentifiedException e) {
+			e.printStackTrace();
 		} finally {
 			closeResources(stmt);
 		}
@@ -215,14 +246,14 @@ public class MedidaOracleDaoImpl<K extends Medida> implements MedidaDao<K> {
 				stmt.setInt(3, getUserId());
 			} else if (entityBeanType.getName().equals(ATIVIDADE_FISICA)) {
 				AtividadeFisica atFis = (AtividadeFisica) medida;
-				stmt.setString(1, atFis.getDescricao());
+				stmt.setString(1, atFis.getDescricao() != null ? atFis.getDescricao() : "");
 				stmt.setInt(2, atFis.getCalorias());
 				stmt.setDate(3, new java.sql.Date(atFis.getDate().getTime()));
 				stmt.setInt(4, getIdByQualificadorMedida(atFis.getTipo()));
 				stmt.setInt(5, getUserId());
 			} else if (entityBeanType.getName().equals(ALIMENTACAO)) {
 				Alimentacao alim = (Alimentacao) medida;
-				stmt.setString(1, alim.getDescricao());
+				stmt.setString(1, alim.getDescricao() != null ? alim.getDescricao() : "");
 				stmt.setInt(2, alim.getCalorias());
 				stmt.setDate(3, new java.sql.Date(alim.getDate().getTime()));
 				stmt.setInt(4, getIdByQualificadorMedida(alim.getTipo()));
@@ -291,6 +322,23 @@ public class MedidaOracleDaoImpl<K extends Medida> implements MedidaDao<K> {
 			tableName = "T_ATIVIDADE";
 		if (entityBeanType.getName().equals(ALIMENTACAO))
 			tableName = "T_ALIMENTACAO";
+		if (tableName == null) {
+			throw new TableNotIdentifiedException();
+		}
+		return tableName;
+
+	}
+
+	private String getIdFieldName() throws TableNotIdentifiedException {
+		String tableName = null;
+		if (entityBeanType.getName().equals(PRESSAO))
+			tableName = "ID_PRESSAO";
+		if (entityBeanType.getName().equals(PESO))
+			tableName = "ID_PESAGEM";
+		if (entityBeanType.getName().equals(ATIVIDADE_FISICA))
+			tableName = "ID_ATIVIDADE";
+		if (entityBeanType.getName().equals(ALIMENTACAO))
+			tableName = "ID_ALIMENTACAO";
 		if (tableName == null) {
 			throw new TableNotIdentifiedException();
 		}
@@ -389,4 +437,5 @@ public class MedidaOracleDaoImpl<K extends Medida> implements MedidaDao<K> {
 		return id;
 
 	}
+
 }

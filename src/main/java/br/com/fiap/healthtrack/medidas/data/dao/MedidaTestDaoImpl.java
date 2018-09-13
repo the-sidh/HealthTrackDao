@@ -40,4 +40,16 @@ public class MedidaTestDaoImpl<K extends Medida> implements MedidaDao<K> {
 		return medidas.stream().filter(medida -> medida.getId()==id).limit(1).collect(Collectors.toList()).get(0);
 	}
 
+	@Override
+	public void purgeAll() {
+	medidas = new ArrayList<K>();
+		
+	}
+
+	@Override
+	public void deleteMedida(int id) {
+		medidas.remove(getMedida(id));
+		
+	}
+
 }

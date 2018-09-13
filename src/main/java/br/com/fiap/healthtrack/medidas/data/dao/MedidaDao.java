@@ -12,4 +12,6 @@ public interface MedidaDao<K extends Medida> {
 	void insertMedidas(K medida);
 	void updateMedida(K medida);
 	void deleteMedida(K medida);
+	void deleteMedida(int id);
+	void purgeAll();
 }
