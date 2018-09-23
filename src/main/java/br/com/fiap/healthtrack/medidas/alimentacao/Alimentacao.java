@@ -9,6 +9,11 @@ import br.com.fiap.healthtrack.medidas.MedidaCalorico;
  */
 public class Alimentacao extends MedidaCalorico<TipoAlimentacao> {
 
+	public Alimentacao() {
+		super();
+	}
+
+	
 	/**
 	 * @param tipo
 	 * @param calorias
@@ -17,5 +22,6 @@ public class Alimentacao extends MedidaCalorico<TipoAlimentacao> {
 	public Alimentacao(TipoAlimentacao tipo, int calorias, String descricao) {
 		super(tipo, calorias, descricao);
 	}
+	
 
 }

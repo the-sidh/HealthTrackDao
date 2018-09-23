@@ -1,4 +1,4 @@
-package br.com.fiap.healthtrack.medidas.data;
+package br.com.fiap.healthtrack.medidas.data.dao;
 
 public class MedidaDaoType {
 

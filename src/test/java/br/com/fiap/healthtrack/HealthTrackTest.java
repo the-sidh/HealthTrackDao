@@ -13,13 +13,15 @@ import br.com.fiap.healthtrack.medidas.alimentacao.Alimentacao;
 import br.com.fiap.healthtrack.medidas.alimentacao.TipoAlimentacao;
 import br.com.fiap.healthtrack.medidas.atividadefisica.AtividadeFisica;
 import br.com.fiap.healthtrack.medidas.atividadefisica.TipoAtividadeFisica;
-import br.com.fiap.healthtrack.medidas.data.MedidaDBDomain;
-import br.com.fiap.healthtrack.medidas.data.MedidaDaoType;
-import br.com.fiap.healthtrack.medidas.data.MedidaType;
+import br.com.fiap.healthtrack.medidas.atividadefisica.bson.AtividadeFisicaBson;
+import br.com.fiap.healthtrack.medidas.data.dao.MedidaDBDomain;
 import br.com.fiap.healthtrack.medidas.data.dao.MedidaDao;
 import br.com.fiap.healthtrack.medidas.data.dao.MedidaDaoFactory;
+import br.com.fiap.healthtrack.medidas.data.dao.MedidaDaoType;
+import br.com.fiap.healthtrack.medidas.data.dao.MedidaType;
 import br.com.fiap.healthtrack.medidas.peso.IMC;
 import br.com.fiap.healthtrack.medidas.peso.Peso;
+import br.com.fiap.healthtrack.medidas.peso.bson.PesoBson;
 import br.com.fiap.healthtrack.medidas.pressao.Pressao;
 import br.com.fiap.healthtrack.medidas.pressao.SituacaoPressao;
 import br.com.fiap.healthtrack.user.Genero;
@@ -85,7 +87,7 @@ public class HealthTrackTest {
 	}
 
 	@Test
-	public void testPressao() {
+	public void testSituacaoPressao() {
 		Pressao p1 = new Pressao(141, 91);// alta
 		Pressao p2 = new Pressao(130, 91);// alta
 		Pressao p3 = new Pressao(141, 85);// alta
@@ -121,7 +123,7 @@ public class HealthTrackTest {
 	}
 
 	@Test
-	public void testPesoDao() {
+	public void testPesoDaoJDBC() {
 
 		Peso peso1 = new Peso(40);
 		peso1.setDate(new Date());
@@ -188,7 +190,7 @@ public class HealthTrackTest {
 	}
 
 	@Test
-	public void testaAtividadeFisicaDao() {
+	public void testaAtividadeFisicaDaoJDBC() {
 		AtividadeFisica af1 = new AtividadeFisica(TipoAtividadeFisica.CAMINHADA, 100, "Teste");
 		AtividadeFisica af2 = new AtividadeFisica(TipoAtividadeFisica.CORRIDA, 100, "Teste");
 		AtividadeFisica af3 = new AtividadeFisica(TipoAtividadeFisica.PEDALADA, 100, "Teste");
@@ -207,6 +209,106 @@ public class HealthTrackTest {
 		dao.insertMedidas(af3);
 
 		List<AtividadeFisica> listaMedidas = dao.getListaMedidas();
+		assertTrue(listaMedidas.size() == 3);
+		assertTrue(dao.getListaMedidas(1, 2).size() == 2);
+		listaMedidas.get(0).setTipo(TipoAtividadeFisica.MUSCULACAO);
+		dao.updateMedida(listaMedidas.get(0));
+		listaMedidas = dao.getListaMedidas();
+		assertTrue(listaMedidas.get(0).getTipo().equals(TipoAtividadeFisica.MUSCULACAO));
+		dao.deleteMedida(listaMedidas.get(0));
+		listaMedidas = dao.getListaMedidas();
+		assertTrue(listaMedidas.size() == 2);
+
+	}
+	
+	
+	@Test
+	public void testPesoDaoNosql() {
+
+		PesoBson peso1 = new PesoBson(40);
+		peso1.setDate(new Date());
+		
+		PesoBson peso2 = new PesoBson(46);
+		peso2.setDate(new Date());
+		
+		PesoBson peso3 = new PesoBson(46.5f);
+		peso3.setDate(new Date());
+		
+		PesoBson peso4 = new PesoBson(49.4f);
+		peso4.setDate(new Date());
+		
+		PesoBson peso5 = new PesoBson(52);
+		peso5.setDate(new Date());
+		
+		PesoBson peso6 = new PesoBson(55);
+		peso6.setDate(new Date());
+		
+		PesoBson peso7 = new PesoBson(69);
+		peso7.setDate(new Date());
+		
+		PesoBson peso8 = new PesoBson(75.5f);
+		peso8.setDate(new Date());
+		
+		PesoBson peso9 = new PesoBson(83);
+		peso9.setDate(new Date());
+		
+		PesoBson peso10 = new PesoBson(89.5f);
+		peso10.setDate(new Date());
+
+		MedidaDaoType tipoPesoTeste = new MedidaDaoType(MedidaType.PESO, MedidaDBDomain.NOSQL);
+		MedidaDao<PesoBson> dao = (MedidaDao<PesoBson>) MedidaDaoFactory.getInstance().getMedidaDao(tipoPesoTeste);
+
+		dao.purgeAll();
+		
+		dao.insertMedidas(peso1);
+		dao.insertMedidas(peso2);
+		dao.insertMedidas(peso3);
+		dao.insertMedidas(peso4);
+		dao.insertMedidas(peso5);
+		dao.insertMedidas(peso6);
+		dao.insertMedidas(peso7);
+		dao.insertMedidas(peso8);
+		dao.insertMedidas(peso9);
+		dao.insertMedidas(peso10);		
+
+		List<PesoBson> listaMedidas = dao.getListaMedidas();
+		
+		for(PesoBson p : listaMedidas) {
+			System.out.println("Peso: "+ p.getPesoEmKg()+" data: "+p.getDate());
+		}
+		
+		assertTrue(listaMedidas.size() == 10);
+		assertTrue(dao.getListaMedidas(1, 2).size() == 2);
+		listaMedidas.get(0).setPesoEmKg(50f);
+		dao.updateMedida(listaMedidas.get(0));
+		listaMedidas = dao.getListaMedidas();
+		assertTrue(dao.getMedida(listaMedidas.get(0).get_id()).getPesoEmKg() == 50f);
+		dao.deleteMedida(listaMedidas.get(0));
+		listaMedidas = dao.getListaMedidas();
+		assertTrue(listaMedidas.size() == 9);
+
+	}
+	
+	@Test
+	public void testaAtividadeFisicaDaoNosql() {
+		AtividadeFisicaBson af1 = new AtividadeFisicaBson(TipoAtividadeFisica.CAMINHADA, 100, "Teste");
+		AtividadeFisicaBson af2 = new AtividadeFisicaBson(TipoAtividadeFisica.CORRIDA, 100, "Teste");
+		AtividadeFisicaBson af3 = new AtividadeFisicaBson(TipoAtividadeFisica.PEDALADA, 100, "Teste");
+
+		af1.setDate(new Date());
+		af2.setDate(new Date());
+		af3.setDate(new Date());
+		
+		MedidaDaoType tipoPesoTeste = new MedidaDaoType(MedidaType.ATIVIDADE_FISICA, MedidaDBDomain.NOSQL);
+		MedidaDao<AtividadeFisicaBson> dao = (MedidaDao<AtividadeFisicaBson>) MedidaDaoFactory.getInstance().getMedidaDao(tipoPesoTeste);
+		
+		dao.purgeAll();
+		
+		dao.insertMedidas(af1);
+		dao.insertMedidas(af2);
+		dao.insertMedidas(af3);
+
+		List<AtividadeFisicaBson> listaMedidas = dao.getListaMedidas();
 		assertTrue(listaMedidas.size() == 3);
 		assertTrue(dao.getListaMedidas(1, 2).size() == 2);
 		listaMedidas.get(0).setTipo(TipoAtividadeFisica.MUSCULACAO);

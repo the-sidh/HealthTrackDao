@@ -12,7 +12,7 @@ public class User {
 	private String nome;
 	private Date dataNasc;
 	private Genero genero;
-	private float altura;
+	private double altura;
 	private String email;
 	private String password;
 	private int id;
@@ -95,7 +95,7 @@ public class User {
 	/**
 	 * @return
 	 */
-	public float getAltura() {
+	public double getAltura() {
 		return altura;
 	}
 

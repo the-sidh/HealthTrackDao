@@ -3,6 +3,7 @@ package br.com.fiap.healthtrack.medidas.data.dao;
 import java.util.List;
 
 import br.com.fiap.healthtrack.medidas.Medida;
+import br.com.fiap.healthtrack.medidas.alimentacao.bson.AlimentacaoBson;
 
 public interface MedidaDao<K extends Medida> {
 
@@ -14,4 +15,6 @@ public interface MedidaDao<K extends Medida> {
 	void deleteMedida(K medida);
 	void deleteMedida(int id);
 	void purgeAll();
+	K getMedida(String _id);
+	void deleteMedida(String _id);
 }

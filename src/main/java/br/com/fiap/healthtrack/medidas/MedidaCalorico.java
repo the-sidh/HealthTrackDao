@@ -25,6 +25,10 @@ public class MedidaCalorico<K extends QualificadorMedida> extends Medida {
 		this.descricao = descricao;
 	}
 
+	public MedidaCalorico() {
+		super();
+	}
+
 	/**
 	 * Retorna o qualificador de medida associado
 	 * @return tipo

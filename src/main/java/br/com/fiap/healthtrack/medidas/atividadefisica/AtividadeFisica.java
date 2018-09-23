@@ -18,4 +18,8 @@ public class AtividadeFisica extends MedidaCalorico<TipoAtividadeFisica>{
 		super(tipo, calorias, descricao);	
 	}
 
+	public AtividadeFisica() {
+		// TODO Auto-generated constructor stub
+	}
+
 }

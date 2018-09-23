@@ -1,4 +1,4 @@
-package br.com.fiap.healthtrack.medidas.data.dao;
+package br.com.fiap.healthtrack.medidas.data.dao.oracle;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import br.com.fiap.healthtrack.database.ConnectionManager;
+import br.com.fiap.healthtrack.database.ConnectionManagerJDBC;
 import br.com.fiap.healthtrack.database.ConnectionManagerOracleImpl;
 import br.com.fiap.healthtrack.database.TableNotIdentifiedException;
 import br.com.fiap.healthtrack.medidas.Medida;
@@ -18,6 +18,7 @@ import br.com.fiap.healthtrack.medidas.alimentacao.Alimentacao;
 import br.com.fiap.healthtrack.medidas.alimentacao.TipoAlimentacao;
 import br.com.fiap.healthtrack.medidas.atividadefisica.AtividadeFisica;
 import br.com.fiap.healthtrack.medidas.atividadefisica.TipoAtividadeFisica;
+import br.com.fiap.healthtrack.medidas.data.dao.MedidaDao;
 import br.com.fiap.healthtrack.medidas.peso.Peso;
 import br.com.fiap.healthtrack.medidas.pressao.Pressao;
 
@@ -29,7 +30,7 @@ public class MedidaOracleDaoImpl<K extends Medida> implements MedidaDao<K> {
 
 	private Class<K> entityBeanType;
 
-	ConnectionManager connectionManager = ConnectionManagerOracleImpl.getInstance();
+	ConnectionManagerJDBC connectionManager = ConnectionManagerOracleImpl.getInstance();
 
 	public MedidaOracleDaoImpl(Class<K> entityBeanType) {
 
@@ -241,7 +242,7 @@ public class MedidaOracleDaoImpl<K extends Medida> implements MedidaDao<K> {
 				stmt.setInt(4, getUserId());
 			} else if (entityBeanType.getName().equals(PESO)) {
 				Peso peso = (Peso) medida;
-				stmt.setFloat(1, peso.getPesoEmKg());
+				stmt.setDouble(1, peso.getPesoEmKg());
 				stmt.setDate(2, new java.sql.Date(peso.getDate().getTime()));
 				stmt.setInt(3, getUserId());
 			} else if (entityBeanType.getName().equals(ATIVIDADE_FISICA)) {
@@ -436,6 +437,18 @@ public class MedidaOracleDaoImpl<K extends Medida> implements MedidaDao<K> {
 
 		return id;
 
+	}
+
+	@Override
+	public K getMedida(String _id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteMedida(String _id) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

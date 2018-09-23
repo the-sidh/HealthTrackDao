@@ -58,7 +58,7 @@ public class OperacoesMedidasHelper {
      *@paran	peso	o peso do usuário
      *@return		O IMC do usuario
 	 */
-	public IMC getIMC(float altura, float peso) {
+	public IMC getIMC(double altura, double peso) {
 		IMC IMC = null;
 		BigDecimal squareHeigth=new BigDecimal(altura).multiply(new BigDecimal(altura));
 		BigDecimal imcCalc = new BigDecimal(peso).divide(squareHeigth,RoundingMode.HALF_UP);

@@ -22,6 +22,9 @@ public class Pressao extends Medida{
 		this.sistolica = sistolica;
 		this.diastolica = diastolica;
 	}
+	public Pressao() {
+		// TODO Auto-generated constructor stub
+	}
 	/**
 	 * retorna a pressao sistolica
 	 * @return

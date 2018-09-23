@@ -1,10 +1,11 @@
-package br.com.fiap.healthtrack.medidas.data.dao;
+package br.com.fiap.healthtrack.medidas.data.dao.mock;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import br.com.fiap.healthtrack.medidas.Medida;
+import br.com.fiap.healthtrack.medidas.data.dao.MedidaDao;
 
 public class MedidaTestDaoImpl<K extends Medida> implements MedidaDao<K> {
 
@@ -49,6 +50,18 @@ public class MedidaTestDaoImpl<K extends Medida> implements MedidaDao<K> {
 	@Override
 	public void deleteMedida(int id) {
 		medidas.remove(getMedida(id));
+		
+	}
+
+	@Override
+	public K getMedida(String _id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteMedida(String _id) {
+		// TODO Auto-generated method stub
 		
 	}
 

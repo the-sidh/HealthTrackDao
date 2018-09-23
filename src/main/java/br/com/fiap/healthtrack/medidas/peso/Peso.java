@@ -9,7 +9,7 @@ import br.com.fiap.healthtrack.medidas.Medida;
  */
 public class Peso extends Medida{
 	
-	private float pesoEmKg;
+	private double pesoEmKg;
 	
 	/**
 	 * @param pesoEmKg
@@ -19,11 +19,17 @@ public class Peso extends Medida{
 		this.pesoEmKg = pesoEmKg;
 	}
 
+	public Peso() {
+		super();
+	}
+
+	
+	
 	/**
 	 * retorna o peso
 	 * @return
 	 */
-	public float getPesoEmKg() {
+	public double getPesoEmKg() {
 		return pesoEmKg;
 	}
 
@@ -31,7 +37,7 @@ public class Peso extends Medida{
 	 * define um novo peso
 	 * @param pesoEmKg
 	 */
-	public void setPesoEmKg(float pesoEmKg) {
+	public void setPesoEmKg(double pesoEmKg) {
 		this.pesoEmKg = pesoEmKg;
 	}
 	

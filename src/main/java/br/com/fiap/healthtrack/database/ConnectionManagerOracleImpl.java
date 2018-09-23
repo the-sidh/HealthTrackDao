@@ -6,11 +6,11 @@ import java.sql.SQLException;
 
 import br.com.fiap.healthtrack.medidas.OperacoesMedidasHelper;
 
-public class ConnectionManagerOracleImpl implements ConnectionManager {
+public class ConnectionManagerOracleImpl implements ConnectionManagerJDBC {
 
-	private static ConnectionManager instance;
+	private static ConnectionManagerJDBC instance;
 	
-	public static ConnectionManager getInstance() {
+	public static ConnectionManagerJDBC getInstance() {
 		if (instance == null) {
 			instance = new ConnectionManagerOracleImpl();
 		}

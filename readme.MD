@@ -9,6 +9,14 @@ Atividade  Fase 6 cap 9
 
 - Para facilitar a correção, incluí dump do meu bd no diretório sql_export , na raiz do projeto.
 
+- Para ir além do pedido e me aproveitar para arender coisas novas, fiz também uma implementação do dao usando BD NoSQL. No caso optei pelo MongoDB.
+criei a classe abstrata NoSQLClientManagerMongoDB e sub classes para cada entidade.
+
+-Adicionei casos de teste do mongoDB na classe de testes tb
+
+-O projeto está disponível em https://github.com/the-sidh/HealthTrackDao
+
+Versoes anteriores: 
 
 Atividade  Fase 6 cap 3
 
