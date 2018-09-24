@@ -2,10 +2,8 @@ package br.com.fiap.healthtrack.user;
 
 import java.util.Date;
 
-
 /**
- * @author Sid
- * Representacao do usuario do healthtrack
+ * @author Sid Representacao do usuario do healthtrack
  */
 public class User {
 
@@ -16,6 +14,11 @@ public class User {
 	private String email;
 	private String password;
 	private int id;
+	private String _id;
+
+	public User() {
+		super();
+	}
 
 	/**
 	 * @param nome
@@ -37,6 +40,7 @@ public class User {
 
 	/**
 	 * Este construtor é usado pela primeira página de cadastro
+	 * 
 	 * @param nome
 	 * @param dataNasc
 	 * @param genero
@@ -133,8 +137,6 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
 
 	public int getId() {
 		return id;
@@ -142,6 +144,18 @@ public class User {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String get_id() {
+		return _id;
+	}
+
+	public void set_id(String _id) {
+		this._id = _id;
+	}
+
+	public void setAltura(double altura) {
+		this.altura = altura;
 	}
 
 	@Override
@@ -171,7 +185,5 @@ public class User {
 			return false;
 		return true;
 	}
-	
-	
 
 }

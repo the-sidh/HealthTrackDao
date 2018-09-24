@@ -8,13 +8,13 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import br.com.fiap.healthtrack.database.DBDomain;
 import br.com.fiap.healthtrack.medidas.OperacoesMedidasHelper;
 import br.com.fiap.healthtrack.medidas.alimentacao.Alimentacao;
 import br.com.fiap.healthtrack.medidas.alimentacao.TipoAlimentacao;
 import br.com.fiap.healthtrack.medidas.atividadefisica.AtividadeFisica;
 import br.com.fiap.healthtrack.medidas.atividadefisica.TipoAtividadeFisica;
 import br.com.fiap.healthtrack.medidas.atividadefisica.bson.AtividadeFisicaBson;
-import br.com.fiap.healthtrack.medidas.data.dao.MedidaDBDomain;
 import br.com.fiap.healthtrack.medidas.data.dao.MedidaDao;
 import br.com.fiap.healthtrack.medidas.data.dao.MedidaDaoFactory;
 import br.com.fiap.healthtrack.medidas.data.dao.MedidaDaoType;
@@ -155,7 +155,7 @@ public class HealthTrackTest {
 		Peso peso10 = new Peso(89.5f);
 		peso10.setDate(new Date());
 
-		MedidaDaoType tipoPesoTeste = new MedidaDaoType(MedidaType.PESO, MedidaDBDomain.JDBC);
+		MedidaDaoType tipoPesoTeste = new MedidaDaoType(MedidaType.PESO, DBDomain.JDBC);
 		MedidaDao<Peso> dao = (MedidaDao<Peso>) MedidaDaoFactory.getInstance().getMedidaDao(tipoPesoTeste);
 
 		dao.purgeAll();
@@ -199,7 +199,7 @@ public class HealthTrackTest {
 		af2.setDate(new Date());
 		af3.setDate(new Date());
 		
-		MedidaDaoType tipoPesoTeste = new MedidaDaoType(MedidaType.ATIVIDADE_FISICA, MedidaDBDomain.JDBC);
+		MedidaDaoType tipoPesoTeste = new MedidaDaoType(MedidaType.ATIVIDADE_FISICA, DBDomain.JDBC);
 		MedidaDao<AtividadeFisica> dao = (MedidaDao<AtividadeFisica>) MedidaDaoFactory.getInstance().getMedidaDao(tipoPesoTeste);
 		
 		dao.purgeAll();
@@ -255,7 +255,7 @@ public class HealthTrackTest {
 		PesoBson peso10 = new PesoBson(89.5f);
 		peso10.setDate(new Date());
 
-		MedidaDaoType tipoPesoTeste = new MedidaDaoType(MedidaType.PESO, MedidaDBDomain.NOSQL);
+		MedidaDaoType tipoPesoTeste = new MedidaDaoType(MedidaType.PESO, DBDomain.NOSQL);
 		MedidaDao<PesoBson> dao = (MedidaDao<PesoBson>) MedidaDaoFactory.getInstance().getMedidaDao(tipoPesoTeste);
 
 		dao.purgeAll();
@@ -299,7 +299,7 @@ public class HealthTrackTest {
 		af2.setDate(new Date());
 		af3.setDate(new Date());
 		
-		MedidaDaoType tipoPesoTeste = new MedidaDaoType(MedidaType.ATIVIDADE_FISICA, MedidaDBDomain.NOSQL);
+		MedidaDaoType tipoPesoTeste = new MedidaDaoType(MedidaType.ATIVIDADE_FISICA, DBDomain.NOSQL);
 		MedidaDao<AtividadeFisicaBson> dao = (MedidaDao<AtividadeFisicaBson>) MedidaDaoFactory.getInstance().getMedidaDao(tipoPesoTeste);
 		
 		dao.purgeAll();

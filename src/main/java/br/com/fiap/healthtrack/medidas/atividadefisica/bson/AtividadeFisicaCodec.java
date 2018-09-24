@@ -16,12 +16,7 @@ import org.bson.codecs.DecoderContext;
 import org.bson.codecs.DocumentCodec;
 import org.bson.codecs.EncoderContext;
 
-import com.mongodb.MongoClientSettings;
-
-import br.com.fiap.healthtrack.medidas.QualificadorMedida;
-import br.com.fiap.healthtrack.medidas.alimentacao.TipoAlimentacao;
 import br.com.fiap.healthtrack.medidas.atividadefisica.TipoAtividadeFisica;
-import oracle.net.aso.d;
 
 public class AtividadeFisicaCodec implements CollectibleCodec<AtividadeFisicaBson> {
 	private Codec<Document> documentCodec;

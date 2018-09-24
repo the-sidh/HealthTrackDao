@@ -15,9 +15,9 @@ import br.com.fiap.healthtrack.medidas.Medida;
 import br.com.fiap.healthtrack.medidas.data.dao.MedidaDao;
 
 public abstract class MedidaMongoDBDao<K extends Medida> implements MedidaDao<K> {
-	private Class<K> entityBeanType;
-	public MedidaMongoDBDao() {
 
+	public MedidaMongoDBDao() {
+		super();
 	}
 
 	@Override
@@ -44,21 +44,21 @@ public abstract class MedidaMongoDBDao<K extends Medida> implements MedidaDao<K>
 	@Override
 	public K getMedida(String id) {
 		MongoCollection<K> mongoCollection = getCollection();
-		K alimentacaoBson = null;
+		K medida = null;
 		try {
-			alimentacaoBson = mongoCollection.find(Filters.eq("_id", id)).first();
+			medida = mongoCollection.find(Filters.eq("_id", id)).first();
 		} finally {
 			close();
 		}
-		return alimentacaoBson;
+		return medida;
 
 	}
 
 	@Override
-	public void insertMedidas(K alimentacaoBson) {
+	public void insertMedidas(K medida) {
 		MongoCollection<K> mongoCollection = getCollection();
 		try {
-			mongoCollection.insertOne(alimentacaoBson);
+			mongoCollection.insertOne(medida);
 		} finally {
 			close();
 		}

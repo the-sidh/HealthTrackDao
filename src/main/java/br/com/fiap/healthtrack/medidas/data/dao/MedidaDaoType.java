@@ -1,12 +1,14 @@
 package br.com.fiap.healthtrack.medidas.data.dao;
 
+import br.com.fiap.healthtrack.database.DBDomain;
+
 public class MedidaDaoType {
 
 	private MedidaType type;
-	private MedidaDBDomain domais;
+	private DBDomain domais;
 	
 	
-	public MedidaDaoType(MedidaType type, MedidaDBDomain domais) {
+	public MedidaDaoType(MedidaType type, DBDomain domais) {
 		super();
 		this.type = type;
 		this.domais = domais;
@@ -16,7 +18,7 @@ public class MedidaDaoType {
 		return type;
 	}
 	
-	public MedidaDBDomain getDBDomain() {
+	public DBDomain getDBDomain() {
 		return domais;
 	}
 	
