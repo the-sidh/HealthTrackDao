@@ -108,6 +108,6 @@ public class UserCodec implements CollectibleCodec<UserBson> {
 
 		return new BsonString(user.get_id());
 	}
-	}
+	
 
 }

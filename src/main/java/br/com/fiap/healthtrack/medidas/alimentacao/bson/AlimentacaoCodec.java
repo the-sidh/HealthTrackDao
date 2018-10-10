@@ -18,9 +18,7 @@ import org.bson.codecs.EncoderContext;
 
 import com.mongodb.MongoClientSettings;
 
-import br.com.fiap.healthtrack.medidas.QualificadorMedida;
 import br.com.fiap.healthtrack.medidas.alimentacao.TipoAlimentacao;
-import oracle.net.aso.d;
 
 public class AlimentacaoCodec implements CollectibleCodec<AlimentacaoBson> {
 	private Codec<Document> documentCodec;

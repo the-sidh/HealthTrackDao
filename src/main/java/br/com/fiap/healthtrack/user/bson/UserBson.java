@@ -28,4 +28,5 @@ public class UserBson extends User implements Bson {
 	@Override
 	public <TDocument> BsonDocument toBsonDocument(Class<TDocument> documentClass, CodecRegistry codecRegistry) {
 		return new BsonDocumentWrapper(this, codecRegistry.get(UserBson.class));
+	}
 }

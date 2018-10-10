@@ -26,9 +26,6 @@ import br.com.fiap.healthtrack.medidas.pressao.Pressao;
 import br.com.fiap.healthtrack.medidas.pressao.SituacaoPressao;
 import br.com.fiap.healthtrack.user.Genero;
 import br.com.fiap.healthtrack.user.User;
-import br.com.fiap.healthtrack.user.data.UserDaoDomain;
-import br.com.fiap.healthtrack.user.data.dao.UserDao;
-import br.com.fiap.healthtrack.user.data.dao.UserDaoFactory;
 
 public class HealthTrackTest {
 
@@ -321,19 +318,19 @@ public class HealthTrackTest {
 
 	}
 	
-	@Test
-	public void testUserDao(){
-		User user = new User("Luis", new Date(), Genero.MASCULINO, 180f);
-		user.setEmail("teste@teste.com");
-		user.setPassword("secret");
-		
-		UserDao dao = UserDaoFactory.getInstance().getDao(UserDaoDomain.TESTE);
-		dao.addUser(user);
-		User user1 = dao.getUser();
-		user1.setPassword("secret1");
-		dao.updateUser(user1);
-		assertTrue(dao.getUser().getPassword().equals("secret1"));
-		
-	}
+//	@Test
+//	public void testUserDao(){
+//		User user = new User("Luis", new Date(), Genero.MASCULINO, 180f);
+//		user.setEmail("teste@teste.com");
+//		user.setPassword("secret");
+//		
+//		UserDao dao = UserDaoFactory.getInstance().getDao(UserDaoDomain.TESTE);
+//		dao.addUser(user);
+//		User user1 = dao.getUser();
+//		user1.setPassword("secret1");
+//		dao.updateUser(user1);
+//		assertTrue(dao.getUser().getPassword().equals("secret1"));
+//		
+//	}
 
 }
